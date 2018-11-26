@@ -9,7 +9,7 @@ Direct Access
 
 | Released | Title | Link |
 | -------- | ------ | ------ |
-| 2018-11-26 | Padding Oracle Attack | [Click Here](padding-oracle-attack//) |
+| 2018-11-26 | Attacking the Oracle: Debugging the Padding | [Click Here](padding-oracle-attack/) |
 | 2018-10-26 | Internet of Sh!t - Hacking Embedded Devices | [Click Here](hacking-embedded-devices/) |
 | 2017-03-27 | Smashing the Memory Protections | [Click Here](smashing-memory-protections/) |
 | 2017-03-27 | Introdução à Exploração de Corrupção de Memória (portuguese) | [Click Here](intro-memory-corruption) |
@@ -17,7 +17,7 @@ Direct Access
 Abstracts
 -------------
 
-- Padding Oracle Attack
+- Attacking the Oracle: Debugging the Padding
 
 	Padding Oracle Attack (PoA) is a cryptography attack commonly applied on CTF challenges and (why not?) applications on the wild. In this presentation, I explain the basics concepts and fundamentals of this technique and how we can apply it using the [paddingoracle](https://github.com/mwielgoszewski/python-paddingoracle) Python package.	
 

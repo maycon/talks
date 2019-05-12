@@ -9,6 +9,7 @@ Direct Access
 
 | Released | Title | Link |
 | -------- | ------ | ------ |
+| 2019-06-18 | Reversing Android Applications | [Click Here](reversing-android-applications)
 | 2018-11-26 | Attacking the Oracle: Debugging the Padding | [Click Here](padding-oracle-attack/) |
 | 2018-10-26 | Internet of Sh!t - Hacking Embedded Devices | [Click Here](hacking-embedded-devices/) |
 | 2017-03-27 | Smashing the Memory Protections | [Click Here](smashing-memory-protections/) |
@@ -16,6 +17,12 @@ Direct Access
 
 Abstracts
 -------------
+
+- Reversing Android Applications
+	
+	Mobile Application has been become the main application on many fields, including sales, financial, retail etc. These application has their own classes of vulnerabilidades and a good start point to have some fun is reversing them. This talk gives a first steps on reversing android applications, showing some fundamentals, techniques and tools.
+
+	This talk was presented on the first DC5527 Meeting.
 
 - Attacking the Oracle: Debugging the Padding
 

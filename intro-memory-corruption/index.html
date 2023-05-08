@@ -1,0 +1,312 @@
+<html lang="pt_BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Introdução a Exploração de Corrupção de Memória</title>
+    
+    <meta name="description" content="Exploração de Corrupção de memória ocorrem quando determinado conteúdo de memória é intencionalmente modificado por causa de falhas de programação. Essas falhas podem ocorrer desde em sistemas operacionais modernos até mini-dispositivos embarcados (como roteadores xDSL). Em sua apresentação, Maycon pretende introduzir de maneira técnica e clara alguns conceitos básicos necessários para um entendimento inicial do processo de exploração dessas vulnerabilidades, focando em exemplos escritos na Linguagem C." />
+    <meta name="author" content="Maycon Maia Vitali" />
+	<link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress">
+<!--
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="20">
+    </div>
+-->
+
+    <div id="title" class="step" data-x="0" data-y="0" data-scale="4">
+        	<span class="title_begin">Introdução a</span>
+        	<h1>Exploração</h1>
+        	<span class="title_end">de Corrupção de Memória</span>
+    </div>
+
+    <!-- 30s - 0:00 ~ 0:30 -->
+    <div id="who" class="step" data-x="0" data-y="2000">
+		<h3>Quem!?</h3>
+		<ul>
+			<li>Maycon Maia Vitali (<a href="mailto:maycon@hacknroll.com">maycon@hacknroll.com</a>)</li>
+			<li>Não possuo certificações Microsoft</li>
+			<li>Não possuo certificações Oracle <span class="obs">(ou qualquer outro SGBD)</span></li>
+			<li>Não possuo certificações Cisco</li>
+			<li>Não sou <strong>CISSP</strong></li>
+		</ul>
+    </div>
+
+    <!-- 1m30s - 0:30 ~ 2:00 -->
+    <div id="who-2" class="step" data-x="1500" data-y="2000" data-rotate="-90">
+		<h3>Quem!? (Parte II)</h3>
+		<br /><br /><br /><br /><br /><br />
+		<span class="logos">
+			<img class="logo logo_uvv" src="img/logo_uvv.png" />
+			<img class="logo logo_ufes" src="img/logo_ufes.png" />
+			<img class="logo logo_hnr" src="img/logo_hnr.png" />
+			<img class="logo logo_conviso" src="img/logo-conviso.png" />
+			<img class="logo logo_osce" src="img/logo_osce.png" />
+		</span>
+    </div>
+
+    <!-- 1m0s - 2:00 ~ 3:00 -->
+    <div id="scheduler" class="step" data-x="0" data-y="3000">
+		<h3>Agenda</h3>
+		<ul>
+			<li>Motivação</li>
+			<li>Escopo da apresentação</li>
+			<li><span class="obs">(Introdução ao)</span> Gerenciamento de Memória</li>
+			<li><span class="obs">(Introdução a)</span> Arquitetura de Computadores</li>
+			<li><i>ABI e Calling Convention</i></li>
+			<li>Corrupção de Memória <span class="obs">(Stack-based Buffer Overflow)</span></li>
+			<li>Exemplo + demonstração</li>
+			<li>Conclusão <span class="obs">(In the jungle)</span></li>
+		</ul>
+    </div>
+
+    <!-- 1m0s - 2:00 ~ 3:00 -->
+    <div id="motivacao" class="step" data-x="0" data-y="4000">
+		<h3>Motivação</h3>
+		<ul>
+			<li>Dominação Mundial</li>
+			<li><i>Bounty Programs</i></li>
+			<li><i>Pwn2Own Hacking Contest</i></li>
+			<li><span class="censured"><i>Black Market</i></span></li>
+		</ul>
+		<br /><br /><br />
+		<img src="img/logo-openssl.png" class="logo logo-openssl" />
+		<img src="img/logo-apache.png" class="logo logo-apache" />
+		<img src="img/logo-flash.png" class="logo logo-flash" />
+		<img src="img/logo-nginx.png" class="logo logo-nginx" />
+		<img src="img/logo-sandbox.png" class="logo logo-sandbox" />
+    </div>
+
+
+    <!-- 1m0s - 2:00 ~ 3:00 -->
+    <div id="pwn2own" class="step" data-x="0" data-y="5000" data-scale=".5">
+		<h3>Pwn2Own <spam class="title_detail">Hacking Contest<spam></h3>
+		<ul>
+			<li>IE 11 + Win 8.1 + Java: <b class="scaling">$30.000,00</b></li>
+			<li>FF + Win 8.1: <b class="scaling">$ 50.000,00</b></li>
+			<li>Safari + OS X: <b class="scaling">$ 65.000,00</b></li>
+			<li>Google Chrome + Win 8.1: <b class="scaling">$ 100.000,00</b></li>
+			<li>IE 11 + Win 8.1 + EMET: <b class="scaling">$ 150,000.00</b></li>
+		</ul>
+
+		<img src="img/logo-java.png" class="logo logo-java" />
+		<img src="img/logo-win8.png" class="logo logo-win8" />
+		<img src="img/logo-ff.png" class="logo logo-ff" />
+		<img src="img/logo-ie.png" class="logo logo-ie" />
+		<img src="img/logo-flash2.png" class="logo logo-flash2" />
+		<img src="img/logo-safari.png" class="logo logo-safari" />
+		<img src="img/logo-chrome.png" class="logo logo-chrome" />
+
+		<br /><br />
+    </div>
+
+    <div id="bmarket" class="step" data-x="0" data-y="6000" data-rotate="180">
+		<h3 class="censured"><i>Black Market</i></h3>
+
+			<img src="img/logo-ios.png" class="logo-ios" /><br />
+			<img src="img/logo-ios2.png" class="logo-ios2" /><br />
+			<span class="im_rich scaling">$ 500.000,00</span>
+    </div>
+
+    <div id="scope" class="step" data-x="0" data-y="7000">
+    	<h3>Escopo da Apresentação</h3>
+    	<ul>
+    		<li>Arquitetura x86<span class="obs">(ia32)</span></li>
+    		<li>Sistema Operacional Linux</li>
+    		<li>Compilador GCC: <span class="obs">(gcc -z execstack -fno-stack-protector -m32)</span></li>
+    	</ul>
+    	<img src="img/logo-linux.png" class="logo-linux" />
+    	<br /><br /><br /><br />
+    </div>
+
+    <div id="mem" class="step" data-x="0" data-y="8000" data-scale="4">
+    	<h3><span class="obs">Introdução ao</span><br>Gerenciamento de Memória</h3>
+    </div>
+
+    <div id="arch-mem-layout" class="step" data-x="0" data-y="9000">
+    	<h3>Linux IA-32 Memory Model</h3>
+    	<img src="img/memory-layout.png" />
+
+    	<span class="lista">
+    		<ul>
+    			<li><b>stack</b>: Pilha do programa, cresce pra <u>baixo</u>;</li>
+    			<li><b>heap</b>: Dados alocados dinamicamente <span class="obs">(malloc)</span>;</li>
+    			<li><b>bss</b>: Dados não inicializados;</li>
+    			<li><b>data</b>: Dados inicializados;</li>
+    			<li><b>text</b>: Código do programa.</li>
+    		</ul>
+    	</span>
+    </div>
+
+
+    <div id="arch" class="step" data-x="0" data-y="10000" data-scale="2" data-rotate="45">
+    	<h3><span class="obs">Introdução a</span><br>Arquitetura de Computadores</h3>
+    </div>
+
+
+    <div id="arch_vn_harv" class="step" data-x="0" data-y="11000" data-rotate="90">
+    	<h3>Von Neumann vs Harvard</h3>
+    	<span id="von-neumann" class="arch-desc"><img src="img/von-neumann.png" /><br/>Von Neumann</span>
+    	<span id="harvard" class="arch-desc"><img src="img/harvard.png" /><br/>Harvard</span>
+    </div>
+
+    <div id="arch-regs" class="step" data-x="0" data-y="12000">
+    	<h3>Registradores da CPU (x86)</h3>
+    	<ul>
+    		<li>Geral<br />EAX<span class="obs"> (acumulator)</span>, EBX<span class="obs"> (base)</span>, ECX<span class="obs"> (counter)</span>, EDX<span class="obs"> (data)</span></li>
+			<li>Segmentos<br />CS, DS, ES, FS, GS</li>
+			<li>Índices<br />ESI<span class="obs"> (source index)</span>, EDI<span class="obs"> (destination index)</span></li>
+			<li>Ponteiros<br />EBP<span class="obs"> (base pointer)</span>, ESP<span class="obs"> (stack pointer)</span>, EIP<span class="obs"> (instruction pointer)</span></li>
+		</ul>
+    </div>
+
+    <div id="arch-isa" class="step" data-x="0" data-y="13000">
+    	<h3>Conjunto de Instruções (ISA)</h3>
+    	<ul>
+    		<li>Movimentação: MOV* <span class="obs">(mov, movb, movw, movl etc)</span> </li>
+    		<li>Aritméticas: ADD, SUB, MUL, IMUL</li>
+    		<li>Saltos: J* <span class="obs"> (jmp, je, jne, jo, jnz etc)</span></li>
+    		<li>Pilha: PUSH, POP</li>
+    		<li>Sub-rotinas: CALL, LEAVE, RET</li>
+    	</ul>
+    </div>
+
+
+    <div id="abi" class="step" data-x="0" data-y="14000" data-scale="4">
+    	<h3><span class="obs">Introdução a</span><br><i>ABI e Calling Convention</i></h3>
+    </div>
+
+    <div id="abi2" class="step" data-x="0" data-y="15000" data-rotate="180">
+    	<h3>Informações Importantes</h3>
+    	<span>
+    		<ul>
+    			<li><b>Parâmetros</b> são empilhados <span class="obs">(instrução push);</span></li>
+    			<li>Endereço de <b>retorno</b> é empilhado <span class="obs">(instrução call);</span></li>
+    			<li><b>Retorno da função</b> fica no registrador <b>EAX</b>;</li>
+    		</ul>
+    	</span>
+    </div>
+
+    <span id="code01"></span>
+
+	<script type="text/javascript">
+		var code00_max = 27;
+		for (i = 1; i <= code00_max; i++) {
+			img_id = ("0" + i).substr(-2)
+			obj_div = document.createElement('div');
+			obj_div.setAttribute('id', 'code01-exec' + img_id);
+			obj_div.setAttribute('class', 'step code-exec');
+			obj_div.setAttribute('data-x', '0');
+			obj_div.setAttribute('data-y', '16000');
+
+			if ((i != 1) && (i != code00_max)) {
+				obj_div.setAttribute('data-transition-duration', '0.2');
+			}
+
+			obj_h3 = document.createElement('h3');
+			obj_h3.innerText = "Exemplo: Análise de uma chamada de função"
+			obj_div.appendChild(obj_h3);
+
+			obj_img = document.createElement('img');
+			obj_img.setAttribute('src', 'img/code-01-exec' + img_id + '.png')
+			obj_div.appendChild(obj_img);
+
+			document.getElementById('code01').appendChild(obj_div);
+		}
+	</script>
+
+	<div id="bof" class="step" data-x="0" data-y="17000" data-scale="4">
+		<h3><span class="obs">Introdução a</span><br><i>Stack-based Buffer Overflow</i></h3>
+	</div>
+
+	<div id="bof_what" class="step" data-x="0" data-y="18000" data-rotate="180">
+		<h3><span class="obs">O que</span><br>Podemos fazer<span class="obs"> com isso</span></h3>
+		<br />
+    	<span class="lista">
+    		<ul>
+    			<li><b>Derrubar</b> a aplicação ou a thread <span class="obs">(DoS - Denial of Service)</span>;</li>
+    			<li><b>Controlar</b> o fluxo de <b>execução</b> <span class="obs">(Alterando o endereço de retorno)</span>:</li>
+    			<ul>
+					<li>Apontar para um código <b>injetado</b> na memória.</li>
+					<li>Apontar para o próprio <b>código da aplicação</b>b> (ex: função <i>never_execute</i>)</li>
+				</ul>
+			</ul>
+    	</span>
+
+	</div>
+
+
+    <span id="code02"></span>
+
+	<script type="text/javascript">
+		var code00_max = 15;
+		for (i = 1; i <= code00_max; i++) {
+			img_id = ("0" + i).substr(-2)
+			obj_div = document.createElement('div');
+			obj_div.setAttribute('id', 'code-exec-02-' + img_id);
+			obj_div.setAttribute('class', 'step code-exec');
+			obj_div.setAttribute('data-x', '0');
+			obj_div.setAttribute('data-y', '19000');
+
+			if ((i != 1) && (i != code00_max)) {
+				obj_div.setAttribute('data-transition-duration', '0.2');
+			}
+
+			obj_h3 = document.createElement('h3');
+			obj_h3.innerText = "Exemplo: Análise de um código vulnerável"
+			obj_div.appendChild(obj_h3);
+
+			obj_img = document.createElement('img');
+			obj_img.setAttribute('src', 'img/code-exec-02-' + img_id + '.png')
+			obj_div.appendChild(obj_img);
+
+			document.getElementById('code02').appendChild(obj_div);
+		}
+	</script>
+
+
+	<div id="example" class="step" data-x="0" data-y="20000">
+		<h3><span class="obs">Exemplo de</span><br>Demonstração da Exploração</h3>
+	</div>
+
+
+	<div id="end1" class="step" data-x="0" data-y="21000">
+		<h3>Considerações Finais<br /><span class="obs">In the jungle?</span></h3>
+		<br />
+		<ul>
+			<li>Isso <b>não funciona assim</b> <span class="obs">(DEP, ASLR, PIE, Stack Cookies so on)</span>;</li>
+			<li>Necessário uma base (acadêmica?) profunda <span class="obs">(SO, AOC, ED so on)</span>;</li>
+			<li>Necessário de <b>conhecimento da aplicação</b> analisada.</li>
+		</ul>
+	</div>
+
+    <div id="endend" class="step" data-x="0" data-y="23000" data-scale="4">
+        	<h3>Obrigado!</h3>
+        	<h1>Dúvidas?</h1>
+    </div>
+
+</div>
+
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+</body>
+</html>
